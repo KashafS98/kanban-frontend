@@ -1,11 +1,11 @@
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
-import Card from '../components/Card'
+import Card from "../components/Card";
 
-export default function DraggableContainer({task, index}) {
+export default function DraggableContainer({ task, index }) {
   return (
     <div>
-      <Draggable key={task.id} draggableId={task.id} index={index}>
+      <Draggable key={task._id} draggableId={task._id} index={index}>
         {(provided, snapshot) => {
           return (
             <div
@@ -20,7 +20,13 @@ export default function DraggableContainer({task, index}) {
                 ...provided.draggableProps.style,
               }}
             >
-              <Card snapshot={snapshot} title={task.content}/>
+              <Card
+                id={task._id}
+                title={task.name}
+                description={task.description}
+                currentState={task.taskState}
+                cover={task.featuredImg}
+              />
             </div>
           );
         }}

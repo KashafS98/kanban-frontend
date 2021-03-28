@@ -1,9 +1,16 @@
 .App {
+  display: flex;
+  flex-direction: column;
   text-align: center;
+}
+
+html{
+  display: flex;
 }
 
 body{
   background-color: #323031;
+  overflow:visible
 }
 
 .App-logo {

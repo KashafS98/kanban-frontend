@@ -16,7 +16,7 @@ export default function DroppableContainer({ column, columnId }) {
               minHeight: 20,
             }}
           >
-            {column.items.map((item, index) => {
+            {column.tasks.map((item, index) => {
               return <Draggable task={item} index={index} key={index}/>;
             })}
             {provided.placeholder}

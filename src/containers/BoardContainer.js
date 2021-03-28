@@ -3,6 +3,7 @@ import { DragDropContext } from "react-beautiful-dnd";
 import Columns from "./Columns";
 
 export default function BoardContainer({ onDragEnd, columns }) {
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       {Object.entries(columns).map(([columnId, column], index) => {
