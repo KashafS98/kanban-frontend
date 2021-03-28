@@ -2,7 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 
 const HeaderContainer = styled.div`
-    width: fit-available;
+    min-width: 100vw;
     min-height: 5vh;
     display: flex;
     align-items: center;

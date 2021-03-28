@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 import EditTaskModal from "./EditTaskModal";
+import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
+import { deleteOneTask, listTaskStates } from "../services";
+import { useDispatch } from "react-redux";
 
 const CardWrapper = styled.div`
   background: #456c86;
@@ -43,6 +46,7 @@ export default function Card({
   id
 }) {
   const [isModalOpen, setisModalOpen] = useState(false);
+  const dispatch = useDispatch()
 
   const showEditModal = () => {
     setisModalOpen(true);
@@ -51,6 +55,21 @@ export default function Card({
     setisModalOpen(false);
   };
 
+  const deleteTask = () => {
+    deleteOneTask({id}).then(res=>{
+        alert('Task Deleted!')
+        listTaskStates().then(res=>{
+          const obj = {}
+          res.data.taskState.map(item=>{
+            obj[item._id] = item
+          })
+          dispatch({
+            type: 'UPDATE_TASK_LIST',
+            payload: obj
+          })
+        })
+    })
+  }
   
   return (
     <CardWrapper>
@@ -58,7 +77,10 @@ export default function Card({
       <CardBody>
         <Title>
           {title}
-          <button onClick={showEditModal}>Edit</button>
+          <div>
+          <AiOutlineEdit onClick={showEditModal}>Edit</AiOutlineEdit>
+          <AiOutlineDelete onClick={deleteTask}>Delete</AiOutlineDelete>
+          </div>
         </Title>
         <p>{description}</p>
       </CardBody>

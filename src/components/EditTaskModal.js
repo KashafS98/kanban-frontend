@@ -38,7 +38,6 @@ export default function EditTaskModal({
   title,
   description,
   imageURL,
-  currentState,
   id
 }) {
     const [data, setData] = useState({
@@ -46,6 +45,15 @@ export default function EditTaskModal({
         description: description,
         imageURL: imageURL
     })
+
+    const closeModal = () => {
+      closeEditModal()
+      setData({
+        title:'',
+        description: '',
+        imageURL: ''
+      })
+    }
 
     const dispatch = useDispatch()
     const saveChanges = (e) =>{
@@ -71,7 +79,7 @@ export default function EditTaskModal({
               payload: obj
             }) 
           })
-          closeEditModal()
+          closeModal()
         }
       })
     }
@@ -82,13 +90,13 @@ export default function EditTaskModal({
         ariaHideApp={false}
         isOpen={isModalOpen}
         // onAfterOpen={afterOpenModal}
-        onRequestClose={closeEditModal}
+        onRequestClose={closeModal}
         style={customStyles}
         contentLabel="Example Modal"
       >
         <div style={{display:'flex', justifyContent:'space-between', alignItems: 'center'}}>
         <h4>Edit Task</h4>
-        <button onClick={closeEditModal} style={{height: '20px'}}>X</button>
+        <button onClick={closeModal} style={{height: '20px'}}>X</button>
         </div>
         <Form onSubmit={saveChanges}>
           <input placeholder="Task Name/Title" value={data.title} onChange={(e)=>{setData({...data, title: e.target.value})}} />
