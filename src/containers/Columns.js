@@ -60,7 +60,7 @@ export default function Columns({ columnId, column }) {
             padding: 8,
           }}
         >
-          <h2>{column.name}</h2>
+          <h3>{column.name}</h3>
           <div>
             <AiOutlineEdit onClick={()=>{seteditStateModal({id:columnId, isOpen: true})}}/>
             <AiOutlineDelete onClick={()=>{deleteState(columnId)}}/>

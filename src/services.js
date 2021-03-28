@@ -10,6 +10,16 @@ export const updateTasks = ({id, data}) => {
     return request.patch(`/v1/task/${id}`, data)
 }
 
+// create task 
+export const createTask = ({ data}) => {
+    return request.post(`v1/task/`, data)
+}
+
+// delete task 
+export const deleteOneTask = ({ id }) => {
+    return request.delete(`v1/task/${id}`)
+}
+
 // list tasks state
 export const listTaskStates = payload => {
     return request.get('/v1/task-state')

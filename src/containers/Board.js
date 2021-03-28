@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import EditStateModal from "../components/EditStateModal";
-import BoardContainer from '../containers/BoardContainer'
-import { createTaskState, listTaskStates, updateTasks, updateTaskState } from "../services";
+import BoardContainer from "../containers/BoardContainer";
+import {
+  createTaskState,
+  listTaskStates,
+  updateTasks,
+} from "../services";
 
 const onDragEnd = (result, columns, setColumns) => {
-
-  console.log(result)
 
   if (!result.destination) return;
   const { source, destination } = result;
@@ -22,22 +24,22 @@ const onDragEnd = (result, columns, setColumns) => {
     const payload = {
       id: result.draggableId,
       data: {
-        taskState: destination.droppableId
-      }
-    }
-    
-    updateTasks(payload)
+        taskState: destination.droppableId,
+      },
+    };
+
+    updateTasks(payload);
 
     setColumns({
       ...columns,
       [source.droppableId]: {
         ...sourceColumn,
-        tasks: sourceItems
+        tasks: sourceItems,
       },
       [destination.droppableId]: {
         ...destColumn,
-        tasks: destItems
-      }
+        tasks: destItems,
+      },
     });
   } else {
     const column = columns[source.droppableId];
@@ -48,97 +50,103 @@ const onDragEnd = (result, columns, setColumns) => {
       ...columns,
       [source.droppableId]: {
         ...column,
-        tasks: copiedItems
-      }
+        tasks: copiedItems,
+      },
     });
-    
   }
 };
 
 function DraggableBoard(props) {
-
   const [columns, setColumns] = useState({});
   const [newStateModal, setnewStateModal] = useState({
-    id: '',
+    id: "",
     isModalOpen: false,
-  })
+  });
 
   useEffect(() => {
-    listTaskStates().then(res=>{
-      const obj = {}
-      res.data.taskState.map(item=>{
-        obj[item._id] = item
-      })
+    listTaskStates().then((res) => {
+      const obj = {};
+      res.data.taskState.map((item) => {
+        obj[item._id] = item;
+      });
       props.dispatch({
-        type: 'UPDATE_TASK_LIST',
-        payload: obj
-      })
-    })
-  }, [])
+        type: "UPDATE_TASK_LIST",
+        payload: obj,
+      });
+    });
+  }, []);
 
   useEffect(() => {
-    setColumns(props.taskStates)
-  }, [props.taskStates])
+    setColumns(props.taskStates);
+  }, [props.taskStates]);
 
   const addNewTask = () => {
     const payload = {
       data: {
-        name: 'New state'
+        name: "New state",
+      },
+    };
+    createTaskState(payload).then((res) => {
+      if (res && res.status === 200) {
+        setnewStateModal({ isModalOpen: true, id: res.data.taskState._id });
       }
-    }
-    createTaskState(payload).then(res=>{
-      if(res && res.status===200){
-        setnewStateModal({isModalOpen:true,id:res.data.taskState._id})
-      }
-    })
-  }
-
+    });
+  };
 
   return (
-    <div style={{ display: "flex", justifyContent: "flex-start", height: "100%", alignItems:'flex-start' }}>
-      <div 
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "flex-start",
+        height: "100%",
+        alignItems: "flex-start",
+      }}
+    >
+      <BoardContainer
+        onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
+        columns={columns}
+      />
+      <div
         style={{
           minHeight: 20,
-          display: 'flex',
-        flexDirection: "column",
-        alignItems: "center",
-          margin: '8px',
-          backgroundColor: 'rgb(11, 84, 107)',
-          borderRadius: '6px',
-          padding: '6px',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          margin: "8px",
+          backgroundColor: "rgba(11, 84, 107, 0.8)",
+          borderRadius: "6px",
+          padding: "6px",
         }}
       >
         <div
           style={{
-            border: '1px dotted #ffffff6e',
-          width: '250px',
+            border: "1px dotted #ffffff6e",
+            width: "250px",
             textAlign: "center",
-            cursor: 'pointer',
+            cursor: "pointer",
           }}
           onClick={addNewTask}
         >
-        <h2> + Add New State</h2>
+          <h3> + Add New State</h3>
         </div>
       </div>
-      <BoardContainer
-        onDragEnd={result => onDragEnd(result, columns, setColumns)}
-        columns={columns}
-     />
-     <EditStateModal
+      <EditStateModal
         isModalOpen={newStateModal.isModalOpen}
-        closeEditModal={()=>{setnewStateModal({...newStateModal, isModalOpen:false})}}
-        title={''}
+        closeEditModal={() => {
+          setnewStateModal({ ...newStateModal, isModalOpen: false });
+        }}
+        title={""}
         id={newStateModal.id}
-     />
+      />
     </div>
   );
 }
 
 const mapStateToProps = (state) => {
-  const {taskStates} = state
+  const { taskStates } = state;
   return {
-    taskStates
-  }
-}
+    taskStates,
+  };
+};
 
-export default connect(mapStateToProps)(DraggableBoard) 
+export default connect(mapStateToProps)(DraggableBoard);
