@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import styled from '@emotion/styled'
 import { useDispatch } from "react-redux";
 import { listTaskStates, updateTasks } from "../services";
+import { buttonStyles } from "../utils/constants";
 
 const Form = styled.form`
     display: flex;
@@ -15,8 +16,7 @@ const Form = styled.form`
         padding: 2% 5%;
     }
     button{
-      height: 32px;
-      width: 64px;
+      ${buttonStyles}
     }
 `
 const customStyles = {
@@ -96,7 +96,7 @@ export default function EditTaskModal({
       >
         <div style={{display:'flex', justifyContent:'space-between', alignItems: 'center'}}>
         <h4>Edit Task</h4>
-        <button onClick={closeModal} style={{height: '20px'}}>X</button>
+        <button onClick={closeModal} style={{height: '20px', background:'transparent', border:'none', outline: 'none'}}>X</button>
         </div>
         <Form onSubmit={saveChanges}>
           <input placeholder="Task Name/Title" value={data.title} onChange={(e)=>{setData({...data, title: e.target.value})}} />

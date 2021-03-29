@@ -3,6 +3,7 @@ import { Droppable } from "react-beautiful-dnd";
 import Draggable from "./CardContainer";
 import { createTask } from "../services";
 import EditTaskModal from "../components/EditTaskModal";
+import { primaryColor, tertiaryColor} from "../utils/constants";
 
 export default function DroppableContainer({ column, columnId }) {
   const [newTaskModal, setnewTaskModal] = useState({
@@ -40,14 +41,14 @@ export default function DroppableContainer({ column, columnId }) {
             {provided.placeholder}
             <div
               style={{
-                background: "#456c86",
+                background: primaryColor,
                 padding: 6,
                 marginBottom: 12,
               }}
             >
               <div
                 style={{
-                  border: "1px dotted #ffffff6e",
+                  border: `1px dotted ${tertiaryColor}`,
                   textAlign: "center",
                   cursor: "pointer",
                   fontSize: "16px",
