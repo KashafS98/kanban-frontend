@@ -15,6 +15,6 @@
    1. `git clone https://github.com/KashafS98/kanban-service.git`
    2. `cd kanban-service`
    3. `yarn` 
-   4. `yarn dev` - starts the app on port 8080
+   4. `yarn dev` - starts the service on port 8080
 9. Visit http://localhost:3000 and you can see the kanban app running.
 10. You can also find a sample insomnia request file in the repo: https://github.com/KashafS98/kanban-frontend/blob/master/Insomnia_kanban.json
