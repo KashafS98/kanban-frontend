@@ -7,6 +7,7 @@ import {
   listTaskStates,
   updateTasks,
 } from "../services";
+import { primaryColor, secondaryColor, tertiaryColor } from "../utils/constants";
 
 const onDragEnd = (result, columns, setColumns) => {
 
@@ -113,14 +114,14 @@ function DraggableBoard(props) {
           flexDirection: "column",
           alignItems: "center",
           margin: "8px",
-          backgroundColor: "rgba(11, 84, 107, 0.8)",
+          backgroundColor: tertiaryColor,
           borderRadius: "6px",
           padding: "6px",
         }}
       >
         <div
           style={{
-            border: "1px dotted #ffffff6e",
+            border: `1px dotted ${primaryColor}`,
             width: "250px",
             textAlign: "center",
             cursor: "pointer",

@@ -4,13 +4,24 @@ import EditTaskModal from "./EditTaskModal";
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import { deleteOneTask, listTaskStates } from "../services";
 import { useDispatch } from "react-redux";
+import { primaryColor } from "../utils/constants";
 
 const CardWrapper = styled.div`
-  background: #456c86;
+  background: ${primaryColor};
   border-radius: 6px;
   min-height: 5vh;
-  :hover {
-    transition: box-shadow 0.3s, border-color 0.3s, -webkit-box-shadow 0.3s;
+  &:hover {
+    box-shadow: 0 1px 2px -2px rgb(0 0 0 / 16%), 0 3px 6px 0 rgb(0 0 0 / 45%), 0 5px 12px 4px rgb(0 0 0 / 9%);
+    transition: box-shadow 0.3s, -webkit-box-shadow 0.3s;
+  }
+  ${
+    props=>props.dragging
+    ? 
+    `
+    transform: rotate(-8deg);
+    `
+    :
+    ''
   }
 `;
 
@@ -43,9 +54,11 @@ export default function Card({
   title = "",
   description = "",
   currentState,
-  id
+  id,
+  isDragging,
 }) {
   const [isModalOpen, setisModalOpen] = useState(false);
+  const [isHovered, setisHovered] = useState(false)
   const dispatch = useDispatch()
 
   const showEditModal = () => {
@@ -72,15 +85,20 @@ export default function Card({
   }
   
   return (
-    <CardWrapper>
+    <CardWrapper dragging={isDragging} onMouseEnter={()=>setisHovered(true)} onMouseLeave={()=>{setisHovered(false)}}>
       <Cover image={cover} />
       <CardBody>
         <Title>
           {title}
-          <div>
+          {
+            isHovered
+            ?
+            <div>
           <AiOutlineEdit onClick={showEditModal}>Edit</AiOutlineEdit>
           <AiOutlineDelete onClick={deleteTask}>Delete</AiOutlineDelete>
           </div>
+          :''
+          }
         </Title>
         <p>{description}</p>
       </CardBody>

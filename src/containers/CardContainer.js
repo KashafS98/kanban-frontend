@@ -14,7 +14,7 @@ export default function DraggableContainer({ task, index }) {
               {...provided.dragHandleProps}
               style={{
                 userSelect: "none",
-                margin: "0 0 8px 0",
+                margin: "0 0 16px 0",
                 minHeight: "50px",
                 // color: "white",
                 ...provided.draggableProps.style,
@@ -26,6 +26,7 @@ export default function DraggableContainer({ task, index }) {
                 description={task.description}
                 currentState={task.taskState}
                 cover={task.featuredImg}
+                isDragging={snapshot.isDragging}
               />
             </div>
           );

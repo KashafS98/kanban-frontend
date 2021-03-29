@@ -4,6 +4,7 @@ import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import { deleteTaskState, listTaskStates } from "../services";
 import { useDispatch } from "react-redux";
 import EditStateModal from "../components/EditStateModal";
+import { tertiaryColor } from "../utils/constants";
 
 export default function Columns({ columnId, column }) {
 
@@ -47,7 +48,7 @@ export default function Columns({ columnId, column }) {
       <div
         style={{
           margin: 8,
-          backgroundColor: "#0b546b",
+          backgroundColor: tertiaryColor,
           borderRadius: 6,
           padding: 2,
         }}
